@@ -6,10 +6,7 @@ from rest_framework.routers import DefaultRouter
 from posts.views import PostViewSet
 from projects.views import ProjectViewSet
 from gallery.views import AlbumViewSet, PhotoViewSet
-from resume.views import (
-    ProfileViewSet, ExperienceViewSet, EducationViewSet,
-    SkillViewSet, CertificationViewSet
-)
+from resume.views import ProfileViewSet
 
 router = DefaultRouter()
 router.register(r'posts', PostViewSet)
@@ -17,13 +14,11 @@ router.register(r'projects', ProjectViewSet)
 router.register(r'albums', AlbumViewSet)
 router.register(r'photos', PhotoViewSet)
 router.register(r'profile', ProfileViewSet)
-router.register(r'experiences', ExperienceViewSet)
-router.register(r'education', EducationViewSet)
-router.register(r'skills', SkillViewSet)
-router.register(r'certifications', CertificationViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('posts.urls')),
     path('api/', include('projects.urls')),
+    path('api/', include('gallery.urls')),
+    path('api/', include('resume.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

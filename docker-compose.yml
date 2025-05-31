@@ -1,40 +1,47 @@
 version: '3.8'
 
 services:
-  backend:
-    build: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/app
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
-    environment:
-      - DEBUG=1
-      - DJANGO_SETTINGS_MODULE=blog.settings
-    depends_on:
-      - db
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    environment:
-      - REACT_APP_API_URL=http://localhost:8000/api
-    depends_on:
-      - backend
-
   db:
-    image: postgres:13
+    image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_DB=blog
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+  backend:
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/app
+      - /app/venv
+      - /app/__pycache__
+      - /app/*/__pycache__
+      - /app/*/*/__pycache__
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - DJANGO_SETTINGS_MODULE=blog.settings
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/blog
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      target: development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000/api
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:

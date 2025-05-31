@@ -5,6 +5,7 @@ from .serializers import AlbumSerializer, PhotoSerializer
 class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
+    lookup_field = 'slug'
 
 class PhotoViewSet(viewsets.ModelViewSet):
     queryset = Photo.objects.all()
