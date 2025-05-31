@@ -1,6 +1,7 @@
 [tool.poetry]
 name = "blog"
 version = "0.1.0"
+<<<<<<< HEAD
 description = "A FastAPI-based blog application"
 authors = ["Your Name <your.email@example.com>"]
 readme = "README.md"
@@ -24,3 +25,43 @@ pydantic-settings = "^2.1.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api" 
+=======
+description = "Blog and Gallery application with FastAPI backend and React frontend"
+authors = ["Your Name <your.email@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.109.0"
+uvicorn = "^0.27.0"
+sqlalchemy = "^2.0.25"
+psycopg2-binary = "^2.9.9"
+python-multipart = "^0.0.6"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+alembic = "^1.13.1"
+pillow = "^10.2.0"
+python-slugify = "^8.0.1"
+pydantic = "^2.6.1"
+pydantic-settings = "^2.1.0"
+python-dotenv = "^1.0.0"
+watchfiles = "^0.21.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+black = "^24.1.1"
+isort = "^5.13.2"
+flake8 = "^7.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3 
+>>>>>>> 3f6247b (gallery not working, implement the markdown)

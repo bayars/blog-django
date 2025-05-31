@@ -1,4 +1,5 @@
 services:
+<<<<<<< HEAD
   web:
     build: .
     ports:
@@ -25,6 +26,48 @@ services:
       - POSTGRES_DB=blog
     ports:
       - "5432:5432"
+=======
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./staticfiles:/app/staticfiles
+      - ./media:/app/media
+    environment:
+      - POSTGRES_SERVER=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=blog
+      - BACKEND_CORS_ORIGINS=["http://localhost:3000"]
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=blog
+    ports:
+      - "5432:5432"
+
+  frontend:
+    build:
+      context: ./frontend
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+>>>>>>> 3f6247b (gallery not working, implement the markdown)
 
 volumes:
   postgres_data:

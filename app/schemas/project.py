@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-from pydantic import BaseModel
-from typing import List, Optional
-from datetime import datetime
-
-class TagBase(BaseModel):
-    name: str
-=======
 from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel, HttpUrl
@@ -13,7 +5,6 @@ from pydantic import BaseModel, HttpUrl
 class TagBase(BaseModel):
     name: str
     slug: str
->>>>>>> 3f6247b (gallery not working, implement the markdown)
 
 class TagCreate(TagBase):
     pass
@@ -24,19 +15,23 @@ class Tag(TagBase):
     class Config:
         from_attributes = True
 
-class PostBase(BaseModel):
+class ProjectBase(BaseModel):
     title: str
+    description: str
     content: str
     featured_image: Optional[str] = None
+    github_url: Optional[str] = None
+    live_url: Optional[str] = None
 
-class PostCreate(PostBase):
+class ProjectCreate(ProjectBase):
     pass
 
-class PostUpdate(PostBase):
+class ProjectUpdate(ProjectBase):
     title: Optional[str] = None
+    description: Optional[str] = None
     content: Optional[str] = None
 
-class Post(PostBase):
+class Project(ProjectBase):
     id: int
     slug: str
     created_at: datetime

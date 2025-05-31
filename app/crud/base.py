@@ -2,7 +2,12 @@ from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
+<<<<<<< HEAD
 from app.db.base_class import Base
+=======
+
+from app.db.base import Base
+>>>>>>> 3f6247b (gallery not working, implement the markdown)
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
