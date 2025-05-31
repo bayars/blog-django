@@ -1,32 +1,33 @@
-FROM python:3.11-slim as base
+FROM python:3.11-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+WORKDIR /app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
-    curl \
+    libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
-WORKDIR /app
+# Install Poetry
+RUN pip install poetry
 
-# Copy only dependency files
-COPY requirements.txt ./
+# Copy poetry configuration files
+COPY pyproject.toml poetry.lock* ./
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Configure poetry to not use a virtual environment
+RUN poetry config virtualenvs.create false
+
+# Install dependencies without installing the project itself
+RUN poetry install --no-interaction --no-ansi --no-root
 
 # Copy the rest of the application
 COPY . .
 
-# Development stage
-FROM base as development
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Create media directory
+RUN mkdir -p media
 
-# Production stage
-FROM base as production
-RUN python manage.py collectstatic --noinput
-CMD ["gunicorn", "blog.wsgi:application", "--bind", "0.0.0.0:8000"] 
+# Expose the port
+EXPOSE 8000
+
+# Command to run the application
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"] 
