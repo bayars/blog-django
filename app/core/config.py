@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings
-from typing import Optional
+from typing import Optional, List
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Blog API"
@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     # Security settings
     SECRET_KEY: str = "your-secret-key-here"  # Change in production
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8  # 8 days
+
+    # CORS settings
+    BACKEND_CORS_ORIGINS: List[str] = ["*"]
 
     class Config:
         case_sensitive = True
