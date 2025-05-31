@@ -10,10 +10,10 @@ services:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
     environment:
-      - DEBUG=0
-      - SECRET_KEY=your-secret-key-here
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-    command: gunicorn blog.wsgi:application --bind 0.0.0.0:8000
+      - DEBUG=1
+      - DJANGO_SETTINGS_MODULE=blog.settings
+    depends_on:
+      - db
 
   frontend:
     build: ./frontend
@@ -27,6 +27,16 @@ services:
     depends_on:
       - backend
 
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=blog
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
 volumes:
+  postgres_data:
   static_volume:
   media_volume: 
