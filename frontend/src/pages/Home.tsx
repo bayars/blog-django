@@ -3,7 +3,6 @@ import {
   Box, 
   Container, 
   Typography, 
-  Button, 
   Grid, 
   Card, 
   CardContent,
@@ -61,7 +60,7 @@ const Home: React.FC = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        background: 'linear-gradient(45deg, #1a237e 30%, #0d47a1 90%)',
+        background: '#121212',
         color: 'white',
         py: 8
       }}
@@ -80,7 +79,8 @@ const Home: React.FC = () => {
               sx={{
                 fontWeight: 'bold',
                 mb: 2,
-                fontSize: isMobile ? '2.5rem' : '4rem'
+                fontSize: isMobile ? '2.5rem' : '4rem',
+                color: 'white'
               }}
             >
               Welcome to My Portfolio
@@ -90,7 +90,7 @@ const Home: React.FC = () => {
           <MotionBox variants={itemVariants}>
             <Typography
               variant="h5"
-              sx={{ mb: 4, opacity: 0.9 }}
+              sx={{ mb: 4, opacity: 0.9, color: '#E0E0E0' }}
             >
               Software Engineer & Creative Developer
             </Typography>
@@ -99,7 +99,7 @@ const Home: React.FC = () => {
 
         <Grid container spacing={3} justifyContent="center">
           {menuItems.map((item, index) => (
-            <Grid component="div" item xs={12} sm={6} md={4} key={item.title}>
+            <Grid item xs={12} sm={6} md={4} key={item.title}>
               <MotionCard
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
@@ -107,11 +107,12 @@ const Home: React.FC = () => {
                 sx={{
                   height: '100%',
                   cursor: 'pointer',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  bgcolor: '#1E1E1E',
+                  border: '1px solid #333',
+                  transition: 'all 0.3s ease',
                   '&:hover': {
-                    background: 'rgba(255, 255, 255, 0.2)',
+                    bgcolor: '#252525',
+                    borderColor: '#64B5F6',
                   }
                 }}
                 onClick={() => navigate(item.path)}
@@ -119,10 +120,10 @@ const Home: React.FC = () => {
                 <CardContent sx={{ textAlign: 'center', py: 4 }}>
                   <Box sx={{ mb: 2 }}>
                     {React.cloneElement(item.icon, {
-                      sx: { fontSize: 40, color: 'white' }
+                      sx: { fontSize: 40, color: '#64B5F6' }
                     })}
                   </Box>
-                  <Typography variant="h5" component="h2">
+                  <Typography variant="h5" component="h2" sx={{ color: '#E0E0E0' }}>
                     {item.title}
                   </Typography>
                 </CardContent>
@@ -130,26 +131,6 @@ const Home: React.FC = () => {
             </Grid>
           ))}
         </Grid>
-
-        <MotionBox
-          variants={itemVariants}
-          sx={{ textAlign: 'center', mt: 6 }}
-        >
-          <Button
-            variant="contained"
-            size="large"
-            onClick={() => window.open('mailto:your.email@example.com')}
-            sx={{
-              background: 'rgba(255, 255, 255, 0.2)',
-              backdropFilter: 'blur(10px)',
-              '&:hover': {
-                background: 'rgba(255, 255, 255, 0.3)',
-              }
-            }}
-          >
-            Contact Me
-          </Button>
-        </MotionBox>
       </Container>
     </Box>
   );
