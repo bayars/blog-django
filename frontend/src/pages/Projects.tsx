@@ -1,18 +1,38 @@
 import React from 'react';
-import { Box, Container, Typography, Grid, Card, CardContent, useTheme, useMediaQuery } from '@mui/material';
+import { Box, Container, Typography, Paper, Grid, Chip, IconButton, useTheme, useMediaQuery } from '@mui/material';
 import { motion } from 'framer-motion';
+import CodeIcon from '@mui/icons-material/Code';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LaunchIcon from '@mui/icons-material/Launch';
 
 const MotionBox = motion(Box);
-const MotionCard = motion(Card);
 
 const Projects: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const projects = [
-    { title: 'Project 1', description: 'Description for Project 1' },
-    { title: 'Project 2', description: 'Description for Project 2' },
-    { title: 'Project 3', description: 'Description for Project 3' },
+    {
+      title: 'Project 1',
+      description: 'Description for Project 1',
+      technologies: ['React', 'TypeScript', 'Node.js'],
+      github: 'https://github.com/yourusername/project1',
+      demo: 'https://project1-demo.com'
+    },
+    {
+      title: 'Project 2',
+      description: 'Description for Project 2',
+      technologies: ['Python', 'Django', 'PostgreSQL'],
+      github: 'https://github.com/yourusername/project2',
+      demo: 'https://project2-demo.com'
+    },
+    {
+      title: 'Project 3',
+      description: 'Description for Project 3',
+      technologies: ['React Native', 'Firebase', 'Redux'],
+      github: 'https://github.com/yourusername/project3',
+      demo: 'https://project3-demo.com'
+    }
   ];
 
   const containerVariants = {
@@ -40,7 +60,7 @@ const Projects: React.FC = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        background: 'linear-gradient(45deg, #1a237e 30%, #0d47a1 90%)',
+        background: '#121212',
         color: 'white',
         py: 8
       }}
@@ -59,7 +79,8 @@ const Projects: React.FC = () => {
               sx={{
                 fontWeight: 'bold',
                 mb: 2,
-                fontSize: isMobile ? '2.5rem' : '4rem'
+                fontSize: isMobile ? '2.5rem' : '4rem',
+                color: 'white'
               }}
             >
               My Projects
@@ -67,32 +88,90 @@ const Projects: React.FC = () => {
           </MotionBox>
         </MotionBox>
 
-        <Grid container spacing={3} justifyContent="center">
-          {projects.map((project, index) => (
-            <Grid item xs={12} sm={6} md={4} key={project.title}>
-              <MotionCard
+        <Grid container spacing={3}>
+          {projects.map((project) => (
+            <Grid item xs={12} md={6} lg={4} key={project.title}>
+              <MotionBox
                 variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                sx={{
-                  height: '100%',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  '&:hover': {
-                    background: 'rgba(255, 255, 255, 0.2)',
-                  }
-                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <CardContent sx={{ textAlign: 'center', py: 4 }}>
-                  <Typography variant="h5" component="h2">
-                    {project.title}
-                  </Typography>
-                  <Typography variant="body1" sx={{ mt: 2 }}>
+                <Paper 
+                  elevation={3}
+                  sx={{
+                    height: '100%',
+                    bgcolor: '#1E1E1E',
+                    borderRadius: 2,
+                    p: 3,
+                    border: '1px solid #333',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      bgcolor: '#252525',
+                      borderColor: '#444'
+                    }
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                    <CodeIcon sx={{ color: '#64B5F6', fontSize: 32 }} />
+                    <Typography variant="h5" component="h2" sx={{ color: '#64B5F6', fontWeight: 600 }}>
+                      {project.title}
+                    </Typography>
+                  </Box>
+                  
+                  <Typography variant="body1" sx={{ color: '#E0E0E0', mb: 3 }}>
                     {project.description}
                   </Typography>
-                </CardContent>
-              </MotionCard>
+
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
+                    {project.technologies.map((tech) => (
+                      <Chip
+                        key={tech}
+                        label={tech}
+                        size="small"
+                        sx={{
+                          bgcolor: '#2C2C2C',
+                          color: '#64B5F6',
+                          border: '1px solid #444',
+                          '&:hover': {
+                            bgcolor: '#333',
+                          }
+                        }}
+                      />
+                    ))}
+                  </Box>
+
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <IconButton
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{ 
+                        color: '#888',
+                        '&:hover': { 
+                          color: '#64B5F6',
+                          bgcolor: 'rgba(100, 181, 246, 0.1)'
+                        }
+                      }}
+                    >
+                      <GitHubIcon />
+                    </IconButton>
+                    <IconButton
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{ 
+                        color: '#888',
+                        '&:hover': { 
+                          color: '#64B5F6',
+                          bgcolor: 'rgba(100, 181, 246, 0.1)'
+                        }
+                      }}
+                    >
+                      <LaunchIcon />
+                    </IconButton>
+                  </Box>
+                </Paper>
+              </MotionBox>
             </Grid>
           ))}
         </Grid>
